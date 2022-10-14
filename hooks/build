@@ -6,7 +6,7 @@ set -eux
 
 if [ -z "${IMAGE_NAME}" ]; then
     echo ! "IMAGE_NAME" variable missing.
-    echo eg. IMAGE_NAME="dehy/adminer:local" sh $0
+    echo eg. IMAGE_NAME="eusoumarlon/adminer" sh $0
     exit 1
 fi
 
@@ -18,7 +18,7 @@ VCS_REF=$(git rev-parse --short HEAD)$(evil_git_dirty)
 BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 version_search_pattern="\s*\* @version "
-VERSION=$(grep -E "^${version_search_pattern}" rootfs/var/www/html/adminer.php | sed -E -e "s/${version_search_pattern}//")
+VERSION=$(grep -E "^${version_search_pattern}" rootfs/var/www/html/index.php | sed -E -e "s/${version_search_pattern}//")
 
 docker build --build-arg VCS_REF=${VCS_REF} \
              --build-arg BUILD_DATE=${BUILD_DATE} \
