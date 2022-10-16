@@ -12,7 +12,7 @@ function adminer_object() {
     //~ include "./plugins/drivers/simpledb.php";
     
     $plugins = array(
-        new FillLoginForm("server","database",getenv('DB_USER'),getenv('DB_PASSWORD'),getenv('DB_NAME'))
+        new FillLoginForm("server", getenv('DB_HOST') ? getenv('DB_HOST') : 'database'  ,getenv('DB_USER'),getenv('DB_PASSWORD'),getenv('DB_NAME'))
     );
     
     /* It is possible to combine customization and plugins:
