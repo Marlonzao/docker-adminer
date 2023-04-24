@@ -7,5 +7,4 @@ RUN apt-get update
 
 RUN apt-get install -y libpq-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install mysqli pdo pdo_mysql \
-    && docker-php-ext-enable pdo_mysql
+    && docker-php-ext-install mysqli pdo pdo_mysql
