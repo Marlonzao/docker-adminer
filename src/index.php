@@ -12,6 +12,17 @@ function adminer_object()
 	// enable extra drivers just by including them
 	//~ include "./plugins/drivers/simpledb.php";
 
+	// Custom class to set CSS theme
+	class AdminerCustomization extends AdminerPlugin
+	{
+		function css()
+		{
+			$return = array();
+			$return[] = getenv('DB_THEME') ? getenv('DB_THEME') : "adminer.css";
+			return $return;
+		}
+	}
+
 	$plugins = array(
 		new FillLoginForm(
 			getenv('DB_TYPE') ? getenv('DB_TYPE') : 'server',
@@ -22,13 +33,7 @@ function adminer_object()
 		)
 	);
 
-	/* It is possible to combine customization and plugins:
-    class AdminerCustomization extends AdminerPlugin {
-    }
-    return new AdminerCustomization($plugins);
-    */
-
-	return new AdminerPlugin($plugins);
+	return new AdminerCustomization($plugins);
 }
 
 // include original Adminer or Adminer Editor
