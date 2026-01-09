@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: adminer-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: adminer-postgres
+    environment:
+      POSTGRES_PASSWORD: postgrespass
+      POSTGRES_USER: postgresuser
+      POSTGRES_DB: testdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Adminer for MySQL
+  adminer-mysql:
+    build: .
+    container_name: adminer-mysql-ui
+    ports:
+      - "8090:80"
+    environment:
+      DB_TYPE: server
+      DB_HOST: mysql
+      DB_USER: testuser
+      DB_PASSWORD: testpass
+      DB_NAME: testdb
+    depends_on:
+      - mysql
+
+  # Adminer for PostgreSQL
+  adminer-postgres:
+    build: .
+    container_name: adminer-postgres-ui
+    ports:
+      - "8091:80"
+    environment:
+      DB_TYPE: pgsql
+      DB_HOST: postgres
+      DB_USER: postgresuser
+      DB_PASSWORD: postgrespass
+      DB_NAME: testdb
+    depends_on:
+      - postgres
+
+volumes:
+  mysql_data:
+  postgres_data:

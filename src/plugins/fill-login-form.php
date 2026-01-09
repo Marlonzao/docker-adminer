@@ -40,9 +40,9 @@ class FillLoginForm {
     $this->database = $database;
   }
     
-  public function loginForm(){  
-    if(empty($_GET[DRIVER]) && empty($_GET["username"]) && empty($_GET["db"]) ){?>
-      <script<?php echo nonce(); ?>>
+  public function loginForm(){
+    if(empty($_GET["driver"]) && empty($_GET["username"]) && empty($_GET["db"]) ){?>
+      <script<?php echo function_exists('nonce') ? nonce() : ''; ?>>
       document.addEventListener("DOMContentLoaded", function(event) {
         var dr = qs("option[value='<?php echo $this->system; ?>']");
         if(dr){ dr.selected = true; }
